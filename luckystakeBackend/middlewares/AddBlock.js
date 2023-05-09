@@ -71,17 +71,32 @@ const AddBlock = async function (req, res) {
   let minerBalance = stakedata.balance;
   minerStake = 100 + minerBalance;
   console.log(stakedata);
+
+  const miners = await minermodel.find();
+  const minersSize = miners.length;
+  const freezeCount = minersSize / 2;
   await minermodel.updateMany(
     { name: finalMiner },
-
     {
       $inc: { reward: 100 },
       $set: { balance: minerStake },
+      $set: { freazeCount: freezeCount + 1 },
       $push: { BlocksMined: finalBlockCount + 1 },
     }
   );
   await BlockDataModel.deleteMany({ name: "lokya" });
   await selected.deleteMany({ name: "lokya" });
+
+  miners.forEach(async (miner) => {
+    if (miner.freezeCount > 0) {
+      await minermodel.updateOne(
+        { name: miner.name },
+        {
+          $inc: { freazeCount: -1 },
+        }
+      );
+    }
+  });
 
   res.send("done!!!!");
 };
