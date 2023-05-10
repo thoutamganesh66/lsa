@@ -6,7 +6,7 @@ import "./miners.css";
 const Miners = () => {
   const [miners, setMiners] = useState([]);
   useEffect(() => {
-    const url = "http://localhost:4000/miner/getminers";
+    const url = "http://192.168.88.149:4000/miner/getminers";
     axios.get(url).then((response) => {
       setMiners(response.data.data);
       console.log("miners:" + miners);
@@ -22,11 +22,24 @@ const Miners = () => {
         <table className="table table-striped">
           <tbody>
             <tr>
-              <td>Name</td>
-              <td>Stake</td>
-              <td>Reward</td>
-              <td>Balance</td>
-              <td>Blocks</td>
+              <td>
+                <b>Name</b>
+              </td>
+              <td>
+                <b>Stake</b>
+              </td>
+              <td>
+                <b>Reward</b>
+              </td>
+              <td>
+                <b>Balance</b>
+              </td>
+              <td>
+                <b>Blocks</b>
+              </td>
+              <td>
+                <b>Freeze count</b>
+              </td>
             </tr>
             {miners.map((miner) => {
               return (
@@ -49,6 +62,7 @@ const Miners = () => {
                         );
                       })}
                     </td>
+                    <td className="text-center">{miner.freazeCount}</td>
                   </tr>
                 </>
               );
