@@ -1,5 +1,6 @@
 import Navbar from "../Navbar/Navbar";
 import "./home.css";
+import chart from "./lsa-chart.png";
 
 const Home = () => {
   return (
@@ -124,12 +125,10 @@ const Home = () => {
           </p>
         </div>
         <div className="flowchart text-center">
-          <img
-            src="http://localhost:3000/static/media/chart.95446fe149706f251708.png"
-            alt="flow chart"
-            width="500"
-            height="600"
-          />
+          <img src={chart} alt="flow chart" width="500" height="600" />
+          <p>
+            <b>Fig:</b> Flowchart representing the flow of LuckyStake Algorithm
+          </p>
         </div>
       </div>
     </div>
