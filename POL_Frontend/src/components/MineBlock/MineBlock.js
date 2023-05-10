@@ -12,6 +12,8 @@ const MineBlock = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
   const [randomNumbers, setRandomNumbers] = useState();
+  const [duplicateNumbers, setDuplicateNumbers] = useState();
+  const [freezedMiners, setFreezedMiners] = useState();
   const [priorityqueue, setPriorityQueue] = useState([]);
   const [miner, setMiner] = useState("");
   const [count, setCount] = useState(0);
@@ -68,7 +70,7 @@ const MineBlock = () => {
     // e.preventDefault();
     setLoading(true);
     const form = new FormData();
-    const url = "http://localhost:4000/mining/generateRandom";
+    const url = "http://192.168.88.149:4000/mining/generateRandom";
     form.append("data", data);
     console.log("formdata is " + form.get("data"));
     if (data) {
@@ -81,6 +83,8 @@ const MineBlock = () => {
             "server response for random num generation " + res.data.minermaps
           );
           setRandomNumbers(res.data.minermaps);
+          setDuplicateNumbers(res.data.duplicateminers);
+          setFreezedMiners(res.data.frozenMiners);
           setCount(0);
           setDisplayData(true);
           // console.log("random numbers stored: "+randomNumbers);
@@ -96,7 +100,7 @@ const MineBlock = () => {
   const successMine = (e) => {
     e.preventDefault();
     const form = new FormData();
-    const url = "http://localhost:4000/mining/addNewBlock";
+    const url = "http://192.168.88.149:4000/mining/addNewBlock";
     form.append("miner", miner);
     console.log("miner is " + form.get("miner"));
     axios
@@ -117,7 +121,7 @@ const MineBlock = () => {
   const failMine = (e) => {
     // e.preventDefault();
     const form = new FormData();
-    const url = "http://localhost:4000/mining/getresponse";
+    const url = "http://192.168.88.149:4000/mining/getresponse";
     form.append("miner", miner);
     console.log("failed miner " + miner);
     axios
@@ -210,6 +214,77 @@ const MineBlock = () => {
                 </CountdownCircleTimer>
               </div>
             </div>
+
+            {duplicateNumbers ? (
+              <>
+                <div className="row mt-4">
+                  <div className="col-sm-6">
+                    <h3 className="randomTitle mt-2">
+                      Duplicate/Eliminated Miners
+                    </h3>
+                    <div className="randsection mt-4 pq-section">
+                      <table className="table table-striped">
+                        <tbody>
+                          {duplicateNumbers?.map((Miner) => {
+                            return (
+                              <tr>
+                                <td className="Minernames">{Miner.nameName}</td>
+                                <td>{Miner.randomNumber}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="row mt-4">
+                  <div className="col-sm-6">
+                    <h3 className="randomTitle mt-2">
+                      Duplicate/Eliminated Miners
+                    </h3>
+                  </div>
+                  <h5>No duplicate miners present</h5>
+                </div>
+              </>
+            )}
+
+            {freezedMiners ? (
+              <>
+                <div className="row mt-4">
+                  <div className="col-sm-6">
+                    <h3 className="randomTitle mt-2">Freezed Miners</h3>
+                    <div className="randsection mt-4 pq-section">
+                      <table className="table table-striped">
+                        <tbody>
+                          {freezedMiners?.map((Miner) => {
+                            return (
+                              <tr>
+                                <td className="Minernames">{Miner.name}</td>
+                                <td>{Miner.freazeCount}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="row mt-4">
+                  <div className="col-sm-6">
+                    <h3 className="randomTitle mt-2">Freezed Miners</h3>
+                  </div>
+                  <h5>No Freezed miners present</h5>
+                </div>
+              </>
+            )}
+
             <div className="row mt-4">
               <div className="col">
                 <h3 className="randomTitle mt-2">Priority Queue</h3>
