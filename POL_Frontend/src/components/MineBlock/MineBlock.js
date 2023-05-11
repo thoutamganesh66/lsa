@@ -186,6 +186,14 @@ const MineBlock = () => {
                 <div className="randsection mt-4">
                   <table className="table table-striped">
                     <tbody>
+                      <tr>
+                        <td>
+                          <b>Name</b>
+                        </td>
+                        <td>
+                          <b>Random Number</b>
+                        </td>
+                      </tr>
                       {randomNumbers?.map((Miner) => {
                         return (
                           <tr>
@@ -215,7 +223,7 @@ const MineBlock = () => {
               </div>
             </div>
 
-            {duplicateNumbers ? (
+            {duplicateNumbers.length > 0 ? (
               <>
                 <div className="row mt-4">
                   <div className="col-sm-6">
@@ -225,6 +233,14 @@ const MineBlock = () => {
                     <div className="randsection mt-4 pq-section">
                       <table className="table table-striped">
                         <tbody>
+                          <tr>
+                            <td>
+                              <b>Name</b>
+                            </td>
+                            <td>
+                              <b>Random Number</b>
+                            </td>
+                          </tr>
                           {duplicateNumbers?.map((Miner) => {
                             return (
                               <tr>
@@ -252,7 +268,7 @@ const MineBlock = () => {
               </>
             )}
 
-            {freezedMiners ? (
+            {freezedMiners.length > 0 ? (
               <>
                 <div className="row mt-4">
                   <div className="col-sm-6">
@@ -260,12 +276,22 @@ const MineBlock = () => {
                     <div className="randsection mt-4 pq-section">
                       <table className="table table-striped">
                         <tbody>
+                          <tr>
+                            <td>
+                              <b>Name</b>
+                            </td>
+                            <td>
+                              <b>Freeze count</b>
+                            </td>
+                          </tr>
                           {freezedMiners?.map((Miner) => {
                             return (
-                              <tr>
-                                <td className="Minernames">{Miner.name}</td>
-                                <td>{Miner.freazeCount}</td>
-                              </tr>
+                              <>
+                                <tr>
+                                  <td className="Minernames">{Miner.name}</td>
+                                  <td>{Miner.freazeCount}</td>
+                                </tr>
+                              </>
                             );
                           })}
                         </tbody>
@@ -291,6 +317,14 @@ const MineBlock = () => {
                 <div className="randsection mt-4 pq-section">
                   <table className="table table-striped">
                     <tbody>
+                      <tr>
+                        <td>
+                          <b>Name</b>
+                        </td>
+                        <td>
+                          <b>Random Number</b>
+                        </td>
+                      </tr>
                       {priorityqueue?.map((Miner) => {
                         return (
                           <tr>
